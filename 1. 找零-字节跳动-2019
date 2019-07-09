@@ -1,0 +1,21 @@
+“”“
+@Link: https://www.nowcoder.com/practice/944e5ca0ea88471fbfa73061ebe95728?tpId=98&tqId=33011&tPage=10&rp=10&ru=/ta/2019test&qru=/ta/2019test/question-ranking
+
+@Language: Python3
+
+@Data: 2019-07-09
+
+@Problem Tag: #DP 
+”“”
+
+n = 1024 - int(input())
+
+d = [float('inf')] * 1025
+d[0], d[1] = 0, 1
+
+for i in range(1, n+1):
+    for j in (1, 4, 16, 64):
+        if i-j >= 0:
+            d[i] = min(d[i], d[i-j] + 1)
+
+print(d[n])
