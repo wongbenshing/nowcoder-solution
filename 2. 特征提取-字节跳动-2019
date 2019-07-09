@@ -1,0 +1,42 @@
+"""
+@Link: https://www.nowcoder.com/practice/5afcf93c419a4aa793e9b325d01957e2?tpId=98&tqId=33009&rp=10&ru=/ta/2019test&qru=/ta/2019test/question-ranking
+
+@Language: Python3
+
+@Date: 2019-07-08
+
+@Problem Type: #Easy
+"""
+
+class Cat():
+    def __init__(self, frame):
+        self.featureDict = {}
+        self.frameNum = frame
+        
+    def read(self):
+        for i in range(self.frameNum):
+            line = input().split(' ')
+            for j in range(int(line[0])):
+                x = int(line[2*j+1])
+                y = int(line[2*j+2])
+                if (x, y) in self.featureDict:
+                    if sum(self.featureDict[(x, y)][-1]) == i:
+                        self.featureDict[(x, y)][-1][1] += 1 
+                    else:
+                        self.featureDict[(x, y)].append([i, 1])
+                else:
+                    self.featureDict[(x, y)] = [[i, 1]]
+                    
+    def findLongestFeature(self):
+        length = [pair[1] for key in self.featureDict 
+                  for pair in self.featureDict[key]]
+        return max(length)
+
+
+if __name__ == "__main__":
+    n = int(input())
+    for _ in range(n):
+        m = int(input())
+        myCat = Cat(m)
+        myCat.read()
+        print(myCat.findLongestFeature())
