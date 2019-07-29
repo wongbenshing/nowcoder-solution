@@ -1,0 +1,52 @@
+"""
+@Problem_Link: https://www.nowcoder.com/pat/6/problem/4044
+
+{W L D [B,C,J]}
+"""
+import sys
+
+
+def check_result(a, b):
+    if a == b:
+        return "D"
+    if (a, b) == ("B", "C") or (a, b) == ("C", "J") or (a, b) == ("J", "B"):
+        return "W"
+    else:
+        return "L"
+
+def find_win_most(p):
+    maxWin = max(p["WR"])
+    if p["WR"][0] == maxWin:
+        return "B"
+    elif p["WR"][1] == maxWin:
+        return "C"
+    else:
+        return "J"
+
+if __name__ == "__main__":
+    n = int(sys.stdin.readline().strip("\n"))
+    mark = {"B":0, "C":1, "J":2}
+    p1 = {'W':0, 'L':0, 'D':0, 'WR':[0, 0, 0]}
+    p2 = {'W':0, 'L':0, 'D':0, 'WR':[0, 0, 0]}
+    
+    for i in range(n):
+        c1, c2 = sys.stdin.readline().strip("\n").split(" ")
+        res = check_result(c1, c2)
+        if res == "W":
+            p1["W"] += 1
+            p2["L"] += 1
+            p1["WR"][mark[c1]] += 1
+        elif res == "L":
+            p1["L"] += 1
+            p2["W"] += 1
+            p2["WR"][mark[c2]] += 1
+        else:
+            p1["D"] += 1
+            p2["D"] += 1
+    
+    w1 = find_win_most(p1)
+    w2 = find_win_most(p2)
+    
+    print(p1["W"], p1["D"], p1["L"])
+    print(p2["W"], p2["D"], p2["L"])
+    print(w1, w2)
