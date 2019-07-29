@@ -1,0 +1,26 @@
+"""
+@Problem_Link: https://www.nowcoder.com/pat/6/problem/4043
+"""
+import sys
+
+if __name__ == "__main__":
+    (A, Q) = sys.stdin.readline().strip("\n").split(" ")
+    lenA = len(A)  # Length of Q
+    Q = int(Q)  # Convert Q to integer
+    i = 0  # Index
+    B, R = "", 0
+
+    while i < lenA:
+        k = 10 if R == 0 else 9
+        k = min(k, lenA-i)
+        subStr = A[i:i + k] if R == 0 else str(R) + A[i:i + k]
+        subStr = int(subStr)
+        temp = str(subStr // Q)
+        if i != 0:
+            while len(temp) < k:
+                temp = '0' + temp
+        B += temp
+        R = subStr % Q
+        i += k
+
+    print(B, R)
