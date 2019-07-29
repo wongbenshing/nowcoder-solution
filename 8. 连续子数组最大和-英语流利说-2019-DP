@@ -1,0 +1,20 @@
+"""
+@Problem_Link: https://www.nowcoder.com/questionTerminal/03d341fb6c9d42debcdd38d82a0a545c?f=discussion
+"""
+import sys
+
+
+if __name__ == "__main__":
+    n = int(sys.stdin.readline().strip("\n"))
+    sumData = []
+    maxSubSum = -float('inf')
+    
+    for i in range(n):
+        data = int(sys.stdin.readline().strip("\n"))
+        if maxSubSum < 0:
+            sumData.append(data)
+        else:
+            sumData.append(data + sumData[i-1])
+        maxSubSum = max(maxSubSum, sumData[i])
+    
+    print(maxSubSum)
