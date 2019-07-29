@@ -1,0 +1,17 @@
+"""
+@Problem_Link: https://www.nowcoder.com/pat/6/problem/4042
+"""
+import sys
+
+if __name__ == "__main__":
+    A, DA, B, DB = sys.stdin.readline().strip("\n").split(" ")
+    PA, PB = "", ""
+    for ch in A:
+        if ch == DA:
+            PA += ch
+    for ch in B:
+        if ch == DB:
+            PB += ch
+    PA = 0 if PA == "" else int(PA)
+    PB = 0 if PB == "" else int(PB)
+    print(PA+PB)
