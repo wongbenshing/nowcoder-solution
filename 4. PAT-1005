@@ -1,0 +1,72 @@
+"""
+@Problem_Link: https://www.nowcoder.com/pat/6/problem/4041
+"""
+import sys
+
+
+def check_higher(a, b):  # If a > b
+    if a[1] + a[2] > b[1] + b[2]:
+        return True
+    elif a[1] + a[2] < b[1] + b[2]:
+        return False
+    else:
+        if a[1] > b[1]:
+            return True
+        elif a[1] < b[1]:
+            return False
+        else:
+            if a[0] < b[0]:
+                return True
+            else:
+                return False
+
+
+def qsort(s):
+    if len(s) >= 2:
+        mid = s[len(s) // 2]
+        l, r = [], []
+        s.remove(mid)
+        for i in s:
+            if check_higher(i, mid):
+                l.append(i)
+            else:
+                r.append(i)
+        return qsort(l) + [mid] + qsort(r)
+    else:
+        return s
+
+
+if __name__ == "__main__":
+    # Read N, L , H
+    (N, L, H) = sys.stdin.readline().strip("\n").split(" ")
+    # Convert to integer
+    N, L, H = int(N), int(L), int(H)
+    stuClass = [[], [], [], []]  # Four clesses of students
+    # Read students
+    for i in range(N):
+        (stuNum, dScore, cScore) = sys.stdin.readline().strip("\n").split(" ")
+        dScore, cScore = int(dScore), int(cScore)
+        # students failed the exam
+        if dScore < L or cScore < L:
+            continue
+        # Class A Student
+        if dScore >= H and cScore >= H:
+            stuClass[0].append((stuNum, dScore, cScore))
+        # Class B Student
+        elif dScore >= H and L <= cScore < H:
+            stuClass[1].append((stuNum, dScore, cScore))
+        # Class C Student
+        elif L <= cScore <= dScore < H:
+            stuClass[2].append((stuNum, dScore, cScore))
+        # Class D Student
+        else:
+            stuClass[3].append((stuNum, dScore, cScore))
+
+    # Sort
+    stuRank = []
+    for stu in stuClass:
+        stuRank += qsort(stu)
+
+    print(len(stuRank))
+    for stu in stuRank:
+        print(stu[0], stu[1], stu[2])
